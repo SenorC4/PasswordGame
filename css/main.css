@@ -84,7 +84,7 @@ textarea:focus {
 
 .rulebad {
    width: 470px;
-   height: 100px;
+   height: fit-content;
    margin: 30px auto;
 
    background-color: rgb(256, 236, 236);
@@ -101,7 +101,7 @@ textarea:focus {
 
 .rulegood {
    width: 470px;
-   height: 100px;
+   height: fit-content;
    margin: 30px auto;
    background-color: rgb(232, 252, 228);
    border-radius: 7px;
@@ -150,11 +150,12 @@ textarea:focus {
 
 .bottom {
    padding: 12px 12px;
+   display: flex;
 }
 
 #congrats {
    width: 470px;
-   height: 83px;
+   height: 78px;
    margin: 30px auto;
    background-color: rgb(176, 244, 172);
    border-radius: 7px;
@@ -168,4 +169,30 @@ textarea:focus {
    animation: fadeIn 0.3s;
    padding: 12px 12px;
    text-align: center;
+}
+
+.button {
+   background-color: #04aa6d;
+   border: none;
+   color: white;
+   display: block;
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   font-size: 16px;
+   margin: 35px;
+   cursor: pointer;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: fit-content;
+}
+
+.button:hover {
+   background-color: #02965f;
+}
+
+#password {
+   visibility: hidden;
+   opacity: 0;
+   transition: visibility 0.5s linear, opacity 0.5s linear;
 }
