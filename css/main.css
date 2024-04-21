@@ -85,7 +85,7 @@ textarea:focus {
 .rulebad {
    width: 470px;
    height: fit-content;
-   margin: 30px auto;
+   margin: 0 auto;
 
    background-color: rgb(256, 236, 236);
    border-radius: 7px;
@@ -102,7 +102,7 @@ textarea:focus {
 .rulegood {
    width: 470px;
    height: fit-content;
-   margin: 30px auto;
+   margin: 0 auto;
    background-color: rgb(232, 252, 228);
    border-radius: 7px;
    box-sizing: border-box;
@@ -211,9 +211,35 @@ textarea:focus {
    height: 100%;
 }
 
-#ruleimage13 {
+#ruleimage13,
+#ruleimage15 {
    margin-left: auto;
    margin-right: auto;
-   width: 80%;
-   height: 80%;
+   width: 60%;
+   height: 60%;
+}
+
+.rules {
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+   padding: 30px;
+}
+
+#lose {
+   width: 470px;
+   height: 68px;
+   margin: 30px auto;
+   background-color: rgb(252, 84, 84);
+   border-radius: 7px;
+   box-sizing: border-box;
+   font-family: "Montserrat";
+   font-weight: 350;
+   font-style: normal;
+   font-size: 15px;
+
+   box-shadow: 0 0 5px rgb(19, 114, 0);
+   animation: fadeIn 0.3s;
+   padding: 12px 12px;
+   text-align: center;
 }
