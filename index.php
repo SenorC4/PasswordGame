@@ -2,7 +2,7 @@
 Password Game Website Project
 
 Tommy Teschner: HTML/JavaScript/UI Design (6 hours)
-Josiah Gansky:
+Josiah Gansky: DB/Prompt Integration (6 hours)
 Luke LeCain:
 Kyle Johnson: 
 
@@ -110,8 +110,8 @@ if ($conn->connect_error) {
       <?php
       // php to handle all of the rule divs and pull the data from database
 
-      // create query
-      $sql = "SELECT title, info FROM prompts ORDER BY title DESC";
+      // create query, pulls prompts from DB in reverse order 
+      $sql = "SELECT title, info, image FROM prompts ORDER BY title DESC";
 
       // save query result into $result
       $result = $conn->query($sql);
@@ -120,7 +120,7 @@ if ($conn->connect_error) {
       // uses RULE_NUM and RULE_DESC values in the database to build html identically to original index.html
       while ($row = $result->fetch_assoc()) {
 
-         // rule bad
+         // rule blocks
          echo "<div id=\"rule" . $row["title"] . '"class="rulebad" style="display: none">';
          echo "<span id=\"spanRule" . $row["title"] . '"class="topbad">';
          echo "<img id=\"imgRule" . $row["title"] . '"class="smallimg" src="images/x.png" alt="img">';
@@ -130,6 +130,12 @@ if ($conn->connect_error) {
          echo "</span>";
          echo "<span class=\"bottom\">";
          echo "<p2>" . $row["info"] . "</p2>";
+
+         // if image
+         if ($row["image"] != NULL) {
+            echo "<img id=\"ruleimage\" src=\"" . $row["image"] . "\">";
+         }
+
          echo "</span>";
          echo "</div>";
       }
@@ -140,22 +146,27 @@ if ($conn->connect_error) {
    <script type="text/javascript">
       var user;
 
+      //Sets password box to not be visible until button is pressed
+      const password = document.querySelector("#password");
+      password.style.visibility = "none";
+
+      //Submit button for username 
       $("#button")
          .on("click", function() {
+
+            //removes username and button from screen
             const username = document.querySelector("#username");
             username.style.display = "none";
             const button = document.querySelector("#button");
             button.style.display = "none";
 
-
-            const password = document.querySelector("#password");
+            //Sets password box to visible again 
             password.style.visibility = "visible";
             password.style.opacity = "1";
-
             user = $("#autoresizing2").val();
          });
 
-      // text area height automatic adjuster based on input
+      // text area height automatic adjuster based on input for username and password boxes 
       $("#autoresizing")
          .each(function() {
             this.setAttribute("style", "height:" + this.scrollHeight + "px;overflow-y:hidden;");
@@ -200,6 +211,63 @@ if ($conn->connect_error) {
 
       var win = false;
 
+      // declare textarea variable so we can change them later in the code 
+      const rule1 = document.querySelector("#rule1");
+      const spanrule1 = document.querySelector("#spanRule1");
+      const imgrule1 = document.querySelector("#imgRule1");
+
+      const rule2 = document.querySelector("#rule2");
+      const spanrule2 = document.querySelector("#spanRule2");
+      const imgrule2 = document.querySelector("#imgRule2");
+
+      const rule3 = document.querySelector("#rule3");
+      const spanrule3 = document.querySelector("#spanRule3");
+      const imgrule3 = document.querySelector("#imgRule3");
+
+      const rule4 = document.querySelector("#rule4");
+      const spanrule4 = document.querySelector("#spanRule4");
+      const imgrule4 = document.querySelector("#imgRule4");
+
+      const rule5 = document.querySelector("#rule5");
+      const spanrule5 = document.querySelector("#spanRule5");
+      const imgrule5 = document.querySelector("#imgRule5");
+
+      const rule6 = document.querySelector("#rule6");
+      const spanrule6 = document.querySelector("#spanRule6");
+      const imgrule6 = document.querySelector("#imgRule6");
+
+      const rule7 = document.querySelector("#rule7");
+      const spanrule7 = document.querySelector("#spanRule7");
+      const imgrule7 = document.querySelector("#imgRule7");
+
+      const rule8 = document.querySelector("#rule8");
+      const spanrule8 = document.querySelector("#spanRule8");
+      const imgrule8 = document.querySelector("#imgRule8");
+
+      const rule9 = document.querySelector("#rule9");
+      const spanrule9 = document.querySelector("#spanRule9");
+      const imgrule9 = document.querySelector("#imgRule9");
+
+      const rule10 = document.querySelector("#rule10");
+      const spanrule10 = document.querySelector("#spanRule10");
+      const imgrule10 = document.querySelector("#imgRule10");
+
+      //const captchaID = Math.floor(Math.random() * 9) + 1;
+
+
+      /*document.getElementById("rule10").innerHTML =  
+          "<span id=\"spanRule10\" class=\"topbad\">" +
+          "<img id=\"imgRule10\" class=\"smallimg\" src=\"images/x.png\" alt=\"img\">" +
+          "<div style=\"padding: 2px\">" +
+          "<p2>Rule 10</p2>" +
+          "</div>" +
+          "</span>" +
+          "<span class=\"bottom\" style = \"vertical-align: top; display: inline-block; text-align: center;\">" +
+          "<img src=\"captchas/" + captchaID + "captcha.jpg\" alt=\"img\" width = 350px height = 100px style = \"display:block; margin-left: auto; margin-right:auto\">" + 
+          "<p2 style = \"display:block;\">Your anwser must contain the anwser to this captcha</p2>" +
+          "</span>" + 
+          "</div>";*/
+
       // this section of code is run every time there is a new text value
       $("#autoresizing").on("input", function() {
 
@@ -209,75 +277,28 @@ if ($conn->connect_error) {
          // get text of textarea
          var text = $("#autoresizing").val();
 
-         // declare textarea variable
-         const rule1 = document.querySelector("#rule1");
-         const spanrule1 = document.querySelector("#spanRule1");
-         const imgrule1 = document.querySelector("#imgRule1");
-         //const rule1good = document.querySelector("#rule1good");
-
-         const rule2 = document.querySelector("#rule2");
-         const spanrule2 = document.querySelector("#spanRule2");
-         const imgrule2 = document.querySelector("#imgRule2");
-         // const rule2good = document.querySelector("#rule2good");
-
-         const rule3 = document.querySelector("#rule3");
-         const spanrule3 = document.querySelector("#spanRule3");
-         const imgrule3 = document.querySelector("#imgRule3");
-         //const rule3good = document.querySelector("#rule3good");
-
-         const rule4 = document.querySelector("#rule4");
-         const spanrule4 = document.querySelector("#spanRule4");
-         const imgrule4 = document.querySelector("#imgRule4");
-         //const rule4good = document.querySelector("#rule4good");
-
-         const rule5 = document.querySelector("#rule5");
-         const spanrule5 = document.querySelector("#spanRule5");
-         const imgrule5 = document.querySelector("#imgRule5");
-         //const rule5good = document.querySelector("#rule5good");
-
-         const rule6 = document.querySelector("#rule6");
-         const spanrule6 = document.querySelector("#spanRule6");
-         const imgrule6 = document.querySelector("#imgRule6");
-         // const rule6good = document.querySelector("#rule6good");
-
-         const rule7 = document.querySelector("#rule7");
-         const spanrule7 = document.querySelector("#spanRule7");
-         const imgrule7 = document.querySelector("#imgRule7");
-         //const rule7good = document.querySelector("#rule7good");
-
-         const rule8 = document.querySelector("#rule8");
-         const spanrule8 = document.querySelector("#spanRule8");
-         const imgrule8 = document.querySelector("#imgRule8");
-         // const rule8good = document.querySelector("#rule8good");
-
-         const rule9 = document.querySelector("#rule9");
-         const spanrule9 = document.querySelector("#spanRule9");
-         const imgrule9 = document.querySelector("#imgRule9");
-         // const rule9good = document.querySelector("#rule9good");
-
-         const rule10 = document.querySelector("#rule10");
-         const spanrule10 = document.querySelector("#spanRule10");
-         const imgrule10 = document.querySelector("#imgRule10");
-         //  const rule10good = document.querySelector("#rule10good");
-
+         //Displays the first rule 
          rule1.style.display = "block";
 
-         // rule 1 (we neeed to convert this so it pulls the rules from the database)
+         // rule 1, checks if the password is longer than 8 characters 
          if (text != null && text.length >= 8) {
+
+            //Changes CSS class to show good rule 
             rule1.classList.remove('rulebad');
             rule1.classList.add('rulegood');
             spanrule1.classList.remove('topbad');
             spanrule1.classList.add('topgood');
             imgrule1.src = "images/check.png";
 
-            //rule1good.style.display = "block";
-
             // display the next rule (because the rule we are in is true)
             rule2.style.display = "block";
 
+            //Sets the rule to be done 
             rule1Done = true;
             rule1Active = true;
          } else {
+
+            //Changes css class to show bad rule 
             rule1.style.display = "block";
             rule1.classList.remove('rulegood');
             rule1.classList.add('rulebad');
@@ -286,14 +307,16 @@ if ($conn->connect_error) {
             imgrule1.src = "images/x.png";
             //rule1good.style.display = "none";
 
+            //Sets the rule to not be done 
             rule1Active = false;
          }
 
-         // rule 2
+         // rule 2, checks if the user has a number in their password 
          function hasNumber(myString) {
             return /\d/.test(myString);
          }
 
+         //If the user has a number and has completed rule 1 
          if (hasNumber(text) && rule1Done) {
             rule2.classList.remove('rulebad');
             rule2.classList.add('rulegood');
@@ -307,7 +330,7 @@ if ($conn->connect_error) {
             rule2Done = true;
             rule2Active = true;
          } else {
-            //rule2good.style.display = "none";
+
             if (rule1Done == true) {
                rule2.style.display = "block";
                rule2.classList.remove('rulegood');
@@ -400,7 +423,7 @@ if ($conn->connect_error) {
             rule5Active = false;
          }
 
-         // rule 6
+         // rule 6, checks if the password contains a month 
          function hasMonths(myString) {
             return (/January|February|March|April|May|June|July|August|September|October|November|December/i).test(myString);
          }
@@ -428,7 +451,7 @@ if ($conn->connect_error) {
             rule6Active = false;
          }
 
-         // rule 7
+         // rule 7, checks if the user has the name of a location in PLNU 
          function hasBuilding(myString) {
             return (/Bond|Cabrillo|Hendricks|Klassen|Cooper|Cunningham|Fermanian|Goodwin|Greek|Smee|Flex|Nease|Nicholson|Wiley|Rohr|Ryan|Sator|Latter|Keller|Colt|Salomon|Brown|Mieras|Evans|Taylor|Starkey|Young/i).test(myString);
          }
@@ -455,9 +478,9 @@ if ($conn->connect_error) {
             rule7Active = false;
          }
 
-         // rule 8
+         // rule 8, checks if the user has a faculty name 
          function hasFaculty(myString) {
-            return (/Mood|Leih|Zack|Alcorn|Jimenez|Crockett|Crow|Havens|Triebold/i).test(myString);
+            return (/Mood|Leih|Jimenez/i).test(myString);
          }
 
          if (hasFaculty(text) == true && rule7Done) {
@@ -482,7 +505,7 @@ if ($conn->connect_error) {
             rule8Active = false;
          }
 
-         // rule 9
+         // rule 9, checks if the password adds up to 68 
          function sum(str) {
             let nums = []
             let sum = 0
@@ -502,7 +525,8 @@ if ($conn->connect_error) {
             spanrule9.classList.add('topgood');
             imgrule9.src = "images/check.png";
 
-            //rule10.style.display = "block";
+            rule10.style.display = "block";
+
             rule9Done = true;
             rule9Active = true;
          } else {
@@ -517,22 +541,50 @@ if ($conn->connect_error) {
             rule9Active = false;
          }
 
+         /*if ((sum(text) == 68) && rule8Done) {
+            rule9.classList.remove('rulebad');
+            rule9.classList.add('rulegood');
+            spanrule9.classList.remove('topbad');
+            spanrule9.classList.add('topgood');
+            imgrule9.src = "images/check.png";
+
+            //rule10.style.display = "block";
+            rule9Done = true;
+            rule9Active = true;
+         } else {
+            if (rule8Done == true) {
+               rule9.style.display = "block";
+               rule9.classList.remove('rulegood');
+               rule9.classList.add('rulebad');
+               spanrule9.classList.remove('topgood');
+               spanrule9.classList.add('topbad');
+               imgrule9.src = "images/x.png";
+            }
+            rule9Active = false;
+         }*/
+
+
          // check if player has won
-         if (rule1Done && rule2Done && rule3Done && rule4Done && rule5Done && rule6Done && rule7Done && rule8Done && rule9Done) {
+         if (rule1Active && rule2Active && rule3Active && rule4Active && rule5Active && rule6Active && rule7Active && rule8Active && rule9Active /*&& rule10Active*/ ) {
+
+            //Clears screen
             const rules = document.querySelector("#rules");
             rules.style.display = "none";
 
+            //Displays congratulations banner 
             const congrats = document.querySelector("#congrats");
             congrats.style.display = "block";
-
             document.getElementById("congrats").innerHTML = "<strong>Congratulations!</strong> <br />You have chosen a valid password with " + this.value.length + " characters.<br />Your password was written to the database!";
             document.getElementById("autoresizing").disabled = true;
 
+            //Sets win to be true 
             win = true;
          }
 
       });
    </script>
+
 </body>
+s
 
 </html>
