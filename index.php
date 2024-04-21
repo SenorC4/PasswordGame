@@ -133,7 +133,7 @@ if ($conn->connect_error) {
 
          // if image
          if ($row["image"] != NULL) {
-            echo "<img id=\"ruleimage\" src=\"" . $row["image"] . "\">";
+            echo "<img id=\"ruleimage" . $row["title"] . "\" src=\"" . $row["image"] . "\"width = 100% height = 100%>";
          }
 
          echo "</span>";
@@ -196,6 +196,9 @@ if ($conn->connect_error) {
       var rule8Done = false;
       var rule9Done = false;
       var rule10Done = false;
+      var rule11Done = false;
+      var rule12Done = false;
+      var rule13one = false;
 
       // for checking at the end if all rules are enabled
       var rule1Active = false;
@@ -208,6 +211,9 @@ if ($conn->connect_error) {
       var rule8Active = false;
       var rule9Active = false;
       var rule10Active = false;
+      var rule11Active = false;
+      var rule12Active = false;
+      var rule13Active = false;
 
       var win = false;
 
@@ -252,21 +258,50 @@ if ($conn->connect_error) {
       const spanrule10 = document.querySelector("#spanRule10");
       const imgrule10 = document.querySelector("#imgRule10");
 
-      //const captchaID = Math.floor(Math.random() * 9) + 1;
+      const rule11 = document.querySelector("#rule11");
+      const spanrule11 = document.querySelector("#spanRule11");
+      const imgrule11 = document.querySelector("#imgRule11");
 
+      const rule12 = document.querySelector("#rule12");
+      const spanrule12 = document.querySelector("#spanRule12");
+      const imgrule12 = document.querySelector("#imgRule12");
 
-      /*document.getElementById("rule10").innerHTML =  
-          "<span id=\"spanRule10\" class=\"topbad\">" +
-          "<img id=\"imgRule10\" class=\"smallimg\" src=\"images/x.png\" alt=\"img\">" +
-          "<div style=\"padding: 2px\">" +
-          "<p2>Rule 10</p2>" +
-          "</div>" +
-          "</span>" +
-          "<span class=\"bottom\" style = \"vertical-align: top; display: inline-block; text-align: center;\">" +
-          "<img src=\"captchas/" + captchaID + "captcha.jpg\" alt=\"img\" width = 350px height = 100px style = \"display:block; margin-left: auto; margin-right:auto\">" + 
-          "<p2 style = \"display:block;\">Your anwser must contain the anwser to this captcha</p2>" +
-          "</span>" + 
-          "</div>";*/
+      const rule13 = document.querySelector("#rule13");
+      const spanrule13 = document.querySelector("#spanRule13");
+      const imgrule13 = document.querySelector("#imgRule13");
+
+      //Random captcha
+      const captchaID = Math.floor(Math.random() * 9) + 1;
+
+      //Captcha anwsers 
+      const captchaAns = [
+         ["laughter.", "tackled"],
+         ["and", "batervan"],
+         ["huntress", "participated"],
+         ["annoyance", "Oct"],
+         ["0-5-0", "Hassam"],
+         ["reign", "eveloost"],
+         ["Levelers", "critics"],
+         ["trieste", "modern-day"],
+         ["fiery", "Church"],
+         ["olcott", "have"]
+      ];
+
+      //Sets random captcha image 
+      document.querySelector("#ruleimage10").src = "captchas/" + captchaID + "captcha.jpg";
+
+      //painting anwsers 
+      const paintingAns = [
+         ["mona lisa"],
+         ["Girl with a Pearl Earring"],
+         ["Starry Night"]
+      ];
+
+      //Random painting
+      const paintingID = Math.floor(Math.random() * 3) + 1;
+
+      //Sets random painting image 
+      document.querySelector("#ruleimage13").src = "images/" + paintingID + "painting.png";
 
       // this section of code is run every time there is a new text value
       $("#autoresizing").on("input", function() {
@@ -483,7 +518,7 @@ if ($conn->connect_error) {
             return (/Mood|Leih|Jimenez/i).test(myString);
          }
 
-         if (hasFaculty(text) == true && rule7Done) {
+         if (hasFaculty(text) && rule7Done) {
             rule8.classList.remove('rulebad');
             rule8.classList.add('rulegood');
             spanrule8.classList.remove('topbad');
@@ -508,17 +543,17 @@ if ($conn->connect_error) {
          // rule 9, checks if the password adds up to 68 
          function sum(str) {
             let nums = []
-            let sum = 0
+            let sum = 0;
 
             for (let i = 0; i < str.length; i++) {
                if (!isNaN(parseInt(str[i]))) {
                   sum += parseInt(str[i])
                }
             }
-            return sum
+            return sum;
          }
 
-         if ((sum(text) == 68) && rule8Done) {
+         if ((sum(text) == 30) && rule8Done) {
             rule9.classList.remove('rulebad');
             rule9.classList.add('rulegood');
             spanrule9.classList.remove('topbad');
@@ -541,31 +576,128 @@ if ($conn->connect_error) {
             rule9Active = false;
          }
 
-         /*if ((sum(text) == 68) && rule8Done) {
-            rule9.classList.remove('rulebad');
-            rule9.classList.add('rulegood');
-            spanrule9.classList.remove('topbad');
-            spanrule9.classList.add('topgood');
-            imgrule9.src = "images/check.png";
+         // rule 10 captcha (case sensitive)
+         function checkCaptcha() {
+            var lowerText = text.toLowerCase();
+            var lowerCap1 = captchaAns[captchaID - 1][0];
+            var lowerCap2 = captchaAns[captchaID - 1][1];
 
-            //rule10.style.display = "block";
-            rule9Done = true;
-            rule9Active = true;
+            return (text.includes(lowerCap1) && text.includes(lowerCap2));
+         }
+
+         if (checkCaptcha() && rule9Done) {
+            rule10.classList.remove('rulebad');
+            rule10.classList.add('rulegood');
+            spanrule10.classList.remove('topbad');
+            spanrule10.classList.add('topgood');
+            imgrule10.src = "images/check.png";
+
+            rule11.style.display = "block";
+
+            rule10Done = true;
+            rule10Active = true;
          } else {
-            if (rule8Done == true) {
-               rule9.style.display = "block";
-               rule9.classList.remove('rulegood');
-               rule9.classList.add('rulebad');
-               spanrule9.classList.remove('topgood');
-               spanrule9.classList.add('topbad');
-               imgrule9.src = "images/x.png";
+            if (rule9Done == true) {
+               rule10.style.display = "block";
+               rule10.classList.remove('rulegood');
+               rule10.classList.add('rulebad');
+               spanrule10.classList.remove('topgood');
+               spanrule10.classList.add('topbad');
+               imgrule10.src = "images/x.png";
             }
-            rule9Active = false;
-         }*/
+            rule10Active = false;
+         }
+
+         // rule 11 duck emoji
+         function hasDuck(myString) {
+            return (/🦆/i).test(myString);
+         }
+
+         if (hasDuck(text) == true && rule10Done) {
+            rule11.classList.remove('rulebad');
+            rule11.classList.add('rulegood');
+            spanrule11.classList.remove('topbad');
+            spanrule11.classList.add('topgood');
+            imgrule11.src = "images/check.png";
+
+            rule12.style.display = "block";
+
+            rule11Done = true;
+            rule11Active = true;
+         } else {
+            if (rule10Done == true) {
+               rule11.style.display = "block";
+               rule11.classList.remove('rulegood');
+               rule11.classList.add('rulebad');
+               spanrule11.classList.remove('topgood');
+               spanrule11.classList.add('topbad');
+               imgrule11.src = "images/x.png";
+            }
+            rule11Active = false;
+         }
+
+         // rule 12 diameter of earth
+         function hasDiameter(myString) {
+            return (/7926/).test(myString);
+         }
+
+         if (hasDiameter(text) == true && rule11Done) {
+            rule12.classList.remove('rulebad');
+            rule12.classList.add('rulegood');
+            spanrule12.classList.remove('topbad');
+            spanrule12.classList.add('topgood');
+            imgrule12.src = "images/check.png";
+
+            rule13.style.display = "block";
+
+            rule12Done = true;
+            rule12Active = true;
+         } else {
+            if (rule11Done == true) {
+               rule12.style.display = "block";
+               rule12.classList.remove('rulegood');
+               rule12.classList.add('rulebad');
+               spanrule12.classList.remove('topgood');
+               spanrule12.classList.add('topbad');
+               imgrule12.src = "images/x.png";
+            }
+            rule12Active = false;
+         }
+
+         // rule 13 painting (case sensitive)
+         function checkPainting() {
+            var lowerText = text.toLowerCase();
+            var lowerCap1 = paintingAns[paintingID - 1][0].toLowerCase();;
+
+            return (lowerText.includes(lowerCap1));
+         }
+
+         if (checkPainting() == true && rule12Done) {
+            rule13.classList.remove('rulebad');
+            rule13.classList.add('rulegood');
+            spanrule13.classList.remove('topbad');
+            spanrule13.classList.add('topgood');
+            imgrule13.src = "images/check.png";
+
+            //rule12.style.display = "block";
+
+            rule13Done = true;
+            rule13Active = true;
+         } else {
+            if (rule12Done == true) {
+               rule13.style.display = "block";
+               rule13.classList.remove('rulegood');
+               rule13.classList.add('rulebad');
+               spanrule13.classList.remove('topgood');
+               spanrule13.classList.add('topbad');
+               imgrule13.src = "images/x.png";
+            }
+            rule13Active = false;
+         }
 
 
          // check if player has won
-         if (rule1Active && rule2Active && rule3Active && rule4Active && rule5Active && rule6Active && rule7Active && rule8Active && rule9Active /*&& rule10Active*/ ) {
+         if (rule1Active && rule2Active && rule3Active && rule4Active && rule5Active && rule6Active && rule7Active && rule8Active && rule9Active && rule10Active && rule11Active && rule12Active && rule13Active) {
 
             //Clears screen
             const rules = document.querySelector("#rules");
@@ -585,6 +717,5 @@ if ($conn->connect_error) {
    </script>
 
 </body>
-s
 
 </html>
