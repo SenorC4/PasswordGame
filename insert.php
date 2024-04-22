@@ -15,13 +15,12 @@ if ($conn->connect_error) {
 }
 
 // get the winning password from ajax call
-$password = $_POST['password'];
 $username = $_POST['username'];
 $length = $_POST['length'];
 
 // create insert query
 
-$sql = "INSERT INTO leaderboard  VALUES ('$username', $length, '$password')";
+$sql = "INSERT INTO leaderboard  VALUES ('$username', $length)";
 
 $conn->query($sql);
 

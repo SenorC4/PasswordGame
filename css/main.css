@@ -1,3 +1,7 @@
+html {
+   scroll-behavior: smooth;
+}
+
 body {
    background-color: rgba(255, 253, 208, 255);
    white-space: normal;
@@ -201,6 +205,13 @@ textarea:focus {
    transition: visibility 0.5s linear, opacity 0.5s linear;
 }
 
+#confirm {
+   visibility: hidden;
+   opacity: 0;
+   transition: visibility 0.5s linear, opacity 0.5s linear;
+   padding: 20px;
+}
+
 #ruleimage {
    width: 350px;
    height: 100px;
@@ -217,6 +228,13 @@ textarea:focus {
    margin-right: auto;
    width: 60%;
    height: 60%;
+}
+
+#ruleimage18 {
+   margin-left: auto;
+   margin-right: auto;
+   width: 75%;
+   height: 75%;
 }
 
 .rules {
@@ -242,4 +260,44 @@ textarea:focus {
    animation: fadeIn 0.3s;
    padding: 12px 12px;
    text-align: center;
+}
+
+table {
+   margin-top: 12px;
+   background-color: rgb(176, 244, 172);
+   margin-left: -12px;
+
+   border-radius: 7px;
+   width: 470px;
+
+   margin-bottom: -12px;
+   box-shadow: 0 0 5px rgb(19, 114, 0);
+   animation: fadeIn 0.3s;
+}
+
+table td {
+   padding: 2px;
+}
+
+#leaderboard {
+   margin: 60px auto;
+   padding-bottom: 50px;
+}
+
+#confirmbutton {
+   background-color: #04aa6d;
+   border: none;
+   color: white;
+   padding: 15px 32px;
+   text-align: center;
+   text-decoration: none;
+   font-size: 16px;
+   margin: 5px;
+   cursor: pointer;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: fit-content;
+   border-radius: 5px;
+
+   animation: fadeIn 0.3s;
 }
